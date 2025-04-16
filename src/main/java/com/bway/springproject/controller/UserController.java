@@ -23,7 +23,8 @@ public class UserController {
 	
 	@PostMapping("/login")
 	public String postLogin(@ModelAttribute User user,Model model) {
-		User u = userService.userLogin(user.getUsername(), user.getPassword());
+		String hashedPassword = DigestUtils.md5DigestAsHex(user.getPassword().getBytes());
+		User u = userService.userLogin(user.getUsername(), hashedPassword);
 		
 		if(u != null) {
 			model.addAttribute("fname",u.getFname());

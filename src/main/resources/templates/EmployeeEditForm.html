@@ -2,7 +2,7 @@
 <html xmlns:th="https://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>Department Edit  Form</title>
+<title>Department Edit Form</title>
 <!-- Latest compiled and minified CSS -->
 </head>
 <body>
@@ -11,43 +11,41 @@
 	<div class="container-fluid">
 		<div class="card">
 			<div class="card-header text-white text-center bg-primary">
-				<h3>Department Edit  Form</h3>
+				<h3>Employee Edit Form</h3>
 			</div>
-			<form action="/department/update" method="post" th:object="${dModel}">
+			<form action="/employee/update" method="post" th:object="${eModel}">
 				<div class="card-body">
 					<div class="row p-2">
-						<div class="col-4">Department Name</div>
+						<div class="col-4">Employee Name</div>
 						<div class="col-6">
-							<input type="text" th:field="*{name}" class="form-control"
-								placeholder="Enter department Name" required>
+							<input type="text" th:field="*{fname}" class="form-control"
+								placeholder="Enter Employee Name" required>
 						</div>
 					</div>
 					<div class="row p-2">
-						<div class="col-4">Department Head(HOD)</div>
+						<div class="col-4">Employee Company</div>
 						<div class="col-6">
-							<input type="text" th:field="*{deptHead}" class="form-control"
-								placeholder="Enter department Head">
+							<input type="text" th:field="*{company}" class="form-control"
+								placeholder="Enter Company">
 						</div>
 					</div>
 					<div class="row p-2">
-						<div class="col-4">Department Phone</div>
+						<div class="col-4">Employee Phone</div>
 						<div class="col-6">
-							<input type="text" th:field="*{deptPhone}" class="form-control"
-								placeholder="Enter department Phone" required>
+							<input type="text" th:field="*{phone}" class="form-control"
+								placeholder="Enter phone" required>
 						</div>
 					</div>
-
 					<div class="row p-2">
 						<div class="col-4"></div>
 						<div class="col-6">
 							<input type="submit" value="Update" class="btn btn-success"
-								placeholder="Enter department " required>
+								placeholder="Enter edit" required>
 						</div>
 					</div>
 					<input type="hidden" th:field="*{id}">
 				</div>
 				<div class="card-footer text-center  bg-warning">@copyright2025</div>
-
 			</form>
 		</div>
 	</div>
