@@ -1,10 +1,13 @@
 package com.bway.springproject.controller;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -68,9 +71,24 @@ public class EmployeeController {
 	    return "redirect:list";
 	}
 	
+	
+	
 //	@PostMapping("/update")
 //	public String updateEmp(@ModelAttribute Employee emp) {
 //		empService.updateEmp(emp);
 //		return "redirect:list";
 //	}
+	
+	
+	
+	@GetMapping("/{id}")
+	public String employee(@PathVariable long id, Model model) {
+        Optional<Employee> employee = empService.findById(id);
+
+        employee.ifPresent(value -> model.addAttribute("employee", value));
+
+        return "EmpolyeeShow";
+		
+		
+	}
 }

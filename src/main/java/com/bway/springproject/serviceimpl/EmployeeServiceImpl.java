@@ -1,6 +1,7 @@
 package com.bway.springproject.serviceimpl;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,6 +41,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Override
 	public List<Employee> getAllEmployee() {
 		return empRepo.findAll();
+	}
+
+	@Override
+	public Optional<Employee> findById(long id) {
+		// TODO Auto-generated method stub
+		return empRepo.findById(id);
 	}
 
 }

@@ -24,14 +24,18 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr th:each="e : ${eList}">
-							<td>[[${e.fname}]]</td>
-							<td>[[${e.company}]]</td>
-							<td>[[${e.gender}]]</td>
-							<td>[[${e.phone}]]</td>
-							<td><a th:href="@{/employee/edit(id=${e.id})}"><input
+						<tr th:each="employee : ${eList}">
+							<td>[[${employee.fname}]]</td>
+							<td>[[${employee.company}]]</td>
+							<td>[[${employee.gender}]]</td>
+							<td>[[${employee.phone}]]</td>
+							<td>
+							<a th:href="@{/employee/{id}(id=${employee.id})}" class="btn btn-success">
+								Show
+							</a>
+							<a th:href="@{/employee/edit(id=${employee.id})}"><input
 									type="submit" value="Edit" class="btn btn-success"></a> <a
-								th:href="@{/employee/delete(id=${e.id})}"><input
+								th:href="@{/employee/delete(id=${employee.id})}"><input
 									type="submit" value="Delete" class="btn btn-danger"></a></td>
 						</tr>
 					</tbody>
