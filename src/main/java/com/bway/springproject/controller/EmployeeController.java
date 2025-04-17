@@ -34,7 +34,11 @@ public class EmployeeController {
 	
 	
 	@PostMapping("/add")
-	public String postEmployee(@ModelAttribute Employee emp) {
+	public String postEmployee(@ModelAttribute Employee emp,Model model) {
+		if(emp.getFname().isBlank()) {
+			model.addAttribute("message","fname is required");
+			return "redirect:add";
+		}
 		empService.addEmp(emp);
 		return "redirect:add";
 	}
@@ -88,7 +92,6 @@ public class EmployeeController {
         employee.ifPresent(value -> model.addAttribute("employee", value));
 
         return "EmpolyeeShow";
-		
 		
 	}
 }
