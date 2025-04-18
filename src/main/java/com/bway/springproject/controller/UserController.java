@@ -11,51 +11,63 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.bway.springproject.model.User;
 import com.bway.springproject.service.UserService;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 public class UserController {
-	
+
 	@Autowired
 	private UserService userService;
-	@GetMapping({"/","/login"})
-	public String getLogin() {		
+
+	@GetMapping({ "/", "/login" })
+	public String getLogin() {
 		return "LoginForm";
 	}
-	
+
 	@PostMapping("/login")
-	public String postLogin(@ModelAttribute User user,Model model) {
+	public String postLogin(@ModelAttribute User user, Model model, HttpSession session) {
 		String hashedPassword = DigestUtils.md5DigestAsHex(user.getPassword().getBytes());
 		User u = userService.userLogin(user.getUsername(), hashedPassword);
-		
-		if(u != null) {
-			model.addAttribute("fname",u.getFname());
+
+		if (u != null) {
+			session.setAttribute("activeUser", u);
+			session.setMaxInactiveInterval(500);
+//			model.addAttribute("fname",u.getFname());
 			return "Home";
 		}
-		model.addAttribute("message","Invalid Username Password!!!");
+		model.addAttribute("message", "Invalid Username Password!!!");
 		return "LoginForm";
 	}
-	
+
 	@GetMapping("/signup")
 	public String getSignup() {
 		return "SignupForm";
 	}
-	
+
 	@PostMapping("/signup")
-	public String postSignup(@ModelAttribute User user,Model model) {
-	
-		//check user if already exist
+	public String postSignup(@ModelAttribute User user, Model model) {
+
+		// check user if already exist
 		if (userService.FindByUserName(user.getUsername()) != null) {
-	        model.addAttribute("message", "User already exists!");
-	        return "SignupForm"; 
-	    }
+			model.addAttribute("message", "User already exists!");
+			return "SignupForm";
+		}
 		user.setPassword(DigestUtils.md5DigestAsHex(user.getPassword().getBytes()));
-		
-		userService.userSignUp(user);		
-		
+
+		userService.userSignUp(user);
+
 		return "LoginForm";
 	}
-	
+
 	@GetMapping("/logout")
-	public String logout() {
+	public String logout(HttpSession session) {
+
+		session.invalidate(); // session kill
 		return "LoginForm";
+	}
+
+	@GetMapping("/profile")
+	public String getProfile() {
+		return "Profile";
 	}
 }
