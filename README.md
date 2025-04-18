@@ -1,0 +1,3 @@
+- Session-based route protection (authentication guard using HttpSession)
+- Email sending functionality configured via application mail server
+- Secure integration using Gmail app password and 2-step verification
