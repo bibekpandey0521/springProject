@@ -10,10 +10,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.bway.springproject.model.User;
 import com.bway.springproject.service.UserService;
+import com.mysql.cj.log.Log;
 
 import jakarta.servlet.http.HttpSession;
+import lombok.extern.slf4j.Slf4j;
 
 @Controller
+@Slf4j
 public class UserController {
 
 	@Autowired
@@ -28,13 +31,16 @@ public class UserController {
 	public String postLogin(@ModelAttribute User user, Model model, HttpSession session) {
 		String hashedPassword = DigestUtils.md5DigestAsHex(user.getPassword().getBytes());
 		User u = userService.userLogin(user.getUsername(), hashedPassword);
-
+		//today i learned about http session which worked as guard in case of gallery route
 		if (u != null) {
+			
+			log.info("-------login success------");
 			session.setAttribute("activeUser", u);
 			session.setMaxInactiveInterval(500);
 //			model.addAttribute("fname",u.getFname());
 			return "Home";
 		}
+		log.info("-------login failed------------");
 		model.addAttribute("message", "Invalid Username Password!!!");
 		return "LoginForm";
 	}
@@ -62,6 +68,7 @@ public class UserController {
 	@GetMapping("/logout")
 	public String logout(HttpSession session) {
 
+		log.info("-----------logout success--------------");
 		session.invalidate(); // session kill
 		return "LoginForm";
 	}
